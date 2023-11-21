@@ -1,11 +1,22 @@
-from setuptools import setup, findpackages
-import codecs
-import os
+import setuptools
 
-here = os.path.abspath(os.path.dirname(__file__))
+with open("README.md", "r", encoding="utf-8") as f:
+    long_description = f.read()
 
-with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
-    long_description = "\n" + fh.read()
+__version__ = '0.0.1'
 
-VERSION = '0.0.1'
+REPO_NAME = "visualInsights"
 DESCRIPTION = 'Visual Insights project'
+SRC_REPO = 'visualInsights'
+AUTHOR = 'CS6242-team165'
+
+setuptools.setup(
+    name= SRC_REPO,
+    version = __version__,
+    author = AUTHOR,
+    description = DESCRIPTION,
+    long_description = long_description,
+    url = f"https://github.com/kpunyakoti/visual-insights",
+    package_dir = {"": "src"},
+    packages = setuptools.find_packages(where="src")
+)

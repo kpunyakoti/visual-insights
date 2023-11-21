@@ -5,15 +5,17 @@ from nuscenes.utils.geometry_utils import view_points, BoxVisibility
 from pyquaternion import Quaternion
 import numpy as np
 import tqdm
+import logging
+import yaml
 
-def informuser(msg, msgtype = "STATUS"):
-    if(msgtype == "STATUS"):
-        print(msg)
-     
 
-nusc = NuScenes(version='v1.0-mini', dataroot='D:\projects\dva\data', verbose=True)
-informuser("Finished Loading Dataset...")
-informuser("Analysing Annotations...")
+
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s:')
+
+nusc = NuScenes(version='v1.0-mini', dataroot='../data/input_data/', verbose=True)
+
+logging.info(f"Finished Loading Dataset")
+logging.info("Analysing Annotations...")
 camera_name = 'CAM_FRONT'
 image_data_dict = dict()
 annotation_ids = []
