@@ -5,9 +5,9 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 __version__ = '0.0.1'
 
-REPO_NAME = "visualInsights"
+REPO_NAME = "visual-insights"
 DESCRIPTION = 'Visual Insights project'
-SRC_REPO = 'visualInsights'
+SRC_REPO = "visualInsights"
 AUTHOR = 'CS6242-team165'
 
 setuptools.setup(
@@ -16,7 +16,7 @@ setuptools.setup(
     author = AUTHOR,
     description = DESCRIPTION,
     long_description = long_description,
-    url = f"https://github.com/kpunyakoti/visual-insights",
+    url = f"https://github.com/kpunyakoti/{REPO_NAME}",
     package_dir = {"": "src"},
     packages = setuptools.find_packages(where="src")
 )

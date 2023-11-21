@@ -5,3 +5,4 @@ notebook
 seaborn
 pyYAML
 tqdm
+-e .
