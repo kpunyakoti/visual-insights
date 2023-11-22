@@ -1,5 +1,5 @@
-camera_name,class_name,counts,proportion
-CAM_FRONT,vehicle,3050,0.5686055182699478
-CAM_FRONT,movable_object,1144,0.21327367636092467
-CAM_FRONT,human,1141,0.2127143922445936
-CAM_FRONT,static_object,29,0.00540641312453393
+class_name,counts,proportion
+vehicle,11929,0.5404584994563247
+human,5701,0.25829104748097137
+movable_object,4373,0.1981243204059442
+static_object,69,0.0031261326567596955
