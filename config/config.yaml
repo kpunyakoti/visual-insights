@@ -1,4 +1,11 @@
 ## app config parameters
 
-data_loading:
-  root_dir:
+data_loader:
+  nuscenes_data_path: data/input_data/v1.0-mini/
+  data_source_url:
+  nuscenes_version: v1.0-mini
+
+  cifar_data_path:
+
+data_output:
+  output_data_path: data/output_data/

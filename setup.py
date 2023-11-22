@@ -11,12 +11,13 @@ SRC_REPO = "visualInsights"
 AUTHOR = 'CS6242-team165'
 
 setuptools.setup(
-    name= SRC_REPO,
-    version = __version__,
-    author = AUTHOR,
-    description = DESCRIPTION,
-    long_description = long_description,
-    url = f"https://github.com/kpunyakoti/{REPO_NAME}",
-    package_dir = {"": "src"},
-    packages = setuptools.find_packages(where="src")
+    name=SRC_REPO,
+    version=__version__,
+    author=AUTHOR,
+    description=DESCRIPTION,
+    long_description=long_description,
+    long_description_content="text/markdown",
+    url=f"https://github.com/kpunyakoti/{REPO_NAME}",
+    package_dir={"": "src"},
+    packages=setuptools.find_packages(where="src")
 )
