@@ -1,0 +1,13 @@
+camera_name,class_name,sub_category,counts,proportion
+CAM_FRONT,vehicle,car,2349,0.43791946308724833
+CAM_FRONT,human,pedestrian,1141,0.2127143922445936
+CAM_FRONT,movable_object,trafficcone,594,0.11073825503355705
+CAM_FRONT,movable_object,barrier,527,0.09824757643549589
+CAM_FRONT,vehicle,bus,180,0.03355704697986577
+CAM_FRONT,vehicle,truck,174,0.03243847874720358
+CAM_FRONT,vehicle,motorcycle,147,0.027404921700223715
+CAM_FRONT,vehicle,construction,101,0.018829231916480237
+CAM_FRONT,vehicle,bicycle,82,0.015287099179716629
+CAM_FRONT,static_object,bicycle_rack,29,0.00540641312453393
+CAM_FRONT,movable_object,pushable_pullable,23,0.004287844891871738
+CAM_FRONT,vehicle,trailer,17,0.003169276659209545

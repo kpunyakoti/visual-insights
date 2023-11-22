@@ -1,4 +1,3 @@
-import os
 from visualInsights import logger
 from visualInsights.pipeline.data_loader import DataLoader, nuscenesDataProcesser
 
@@ -10,9 +9,11 @@ try:
     nuscene_obj = data_loader.load_nuscenes_data()
 
     data_processor = nuscenesDataProcesser(nuscene_obj)
-    data_processor.extract_nuscenes()
+    image_dict = data_processor.extract_nuscenes()
+
+    logger.info("Generating class distribution data from nuscenes")
+    data_processor.get_class_distribution(image_dict)
 
 except Exception as e:
     logger.exception(e)
     raise e
-

@@ -1,0 +1,5 @@
+camera_name,class_name,counts,proportion
+CAM_FRONT,vehicle,3050,0.5686055182699478
+CAM_FRONT,movable_object,1144,0.21327367636092467
+CAM_FRONT,human,1141,0.2127143922445936
+CAM_FRONT,static_object,29,0.00540641312453393

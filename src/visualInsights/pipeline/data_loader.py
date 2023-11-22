@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import tqdm
 import os
 from pathlib import  Path
@@ -66,16 +67,48 @@ class nuscenesDataProcesser:
         json_file_path = os.path.join(self.output_path, "camera_front_boxes.json")
         save_json(Path(json_file_path), image_data_dict)
 
-# if __name__ == '__main__':
+        return image_data_dict
 
-    #os.chdir(ROOT_DIR)
-    # data_loader = DataLoader()
-    # logger.info("Loading nuscenes data.")
-    # nuscene_obj = data_loader.load_nuscenes_data()
-    #
-    # data_processor = nuscenesDataProcesser(nuscene_obj)
-    # image_dict = data_processor.extract_nuscenes()
-    #
-    # logger.info("Saving extracted image data dict")
-    # output_path = os.path.join(data_loader.config.data_process['output_data_path'],"camera_front_boxes.json")
-    # save_json(Path(output_path), image_dict)
+    def get_class_distribution(self, image_dict):
+
+        data = image_dict
+        iid_list, name_list, corners_list = [], [], []
+
+        for key, value in data.items():
+            iID = value["iID"]
+            annotations = value["annotations"]
+
+            for annotation in annotations:
+                name = annotation["name"]
+                corners = annotation["corners"]
+
+                # Append the data to the respective lists
+                iid_list.append(iID)
+                name_list.append(name)
+                corners_list.append(corners)
+
+        image_df = pd.DataFrame({"iID": iid_list,
+                                 "name": name_list,
+                                 "corners": corners_list
+                                 })
+        image_df[['class_name', 'sub_category', 'grain']] = image_df['name'].str.split('.', expand=True, n=2)
+
+        class_counts = pd.DataFrame({'counts': image_df.class_name.value_counts(),
+                                     'proportion': image_df.class_name.value_counts(normalize=True)
+                                     }).reset_index().rename(columns={"index": "class_name"})
+        class_counts['camera_name'] = self.camera_name
+        class_counts = class_counts[['camera_name', 'class_name', 'counts', 'proportion']]
+
+        sub_category_counts = pd.DataFrame({'counts': image_df[['class_name', 'sub_category']].value_counts(),
+                                            'proportion': image_df[['class_name', 'sub_category']].value_counts(
+                                                normalize=True)
+                                            }).reset_index()
+        sub_category_counts['camera_name'] = self.camera_name
+        sub_category_counts = sub_category_counts[['camera_name', 'class_name', 'sub_category', 'counts', 'proportion']]
+
+        class_counts_filename = os.path.join(self.output_path, "class_counts.csv")
+        sub_categogy_filename = os.path.join(self.output_path, "sub_category_counts.csv")
+
+        logger.info("Saving class distribution files.")
+        class_counts.to_csv(class_counts_filename, index=False)
+        sub_category_counts.to_csv(sub_categogy_filename, index=False)
