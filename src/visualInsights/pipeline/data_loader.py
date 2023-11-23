@@ -21,13 +21,13 @@ class DataLoader:
             self.data_path = config.data_loader['cifar_data_path']
 
     def load_nuscenes_data(self):
-
-        nuscene_obj = NuScenes(version=self.nuscenes_version, dataroot=self.data_path, verbose=True)
-        return nuscene_obj
+        nuscenes_data_path = os.path.join(self.data_path,self.nuscenes_version)
+        nuscenes_obj = NuScenes(version=self.nuscenes_version, dataroot=nuscenes_data_path, verbose=True)
+        return nuscenes_obj
 
 class nuscenesDataExtractor:
-    def __init__(self, nuscene_obj):
-        self.nuscene_obj = nuscene_obj
+    def __init__(self, nuscenes_obj):
+        self.nuscenes_obj = nuscenes_obj
         self.nuscenes_version = config.data_loader['nuscenes_version']
         self.output_path = config.data_output['output_data_path']
         self.channel_names = params.channel_names
@@ -38,16 +38,16 @@ class nuscenesDataExtractor:
 
         image_data_dict = dict()
 
-        for scene in tqdm.tqdm(self.nuscene_obj.scene):
+        for scene in tqdm.tqdm(self.nuscenes_obj.scene):
             token = scene['first_sample_token']
             while token != '':
-                sample = self.nuscene_obj.get('sample', token)
+                sample = self.nuscenes_obj.get('sample', token)
                 annotation_list = sample['anns']
 
                 for channel in self.channel_names:
                     channel_token = sample['data'][channel]
                     # Get the annotations for this sample
-                    filename, boxes, camera_intrinsic = self.nuscene_obj.get_sample_data(channel_token,
+                    filename, boxes, camera_intrinsic = self.nuscenes_obj.get_sample_data(channel_token,
                                                                              selected_anntokens=annotation_list)
 
                     # If this same was not there in the list already add an empty array to hold the annotations

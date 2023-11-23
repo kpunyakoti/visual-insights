@@ -1,5 +1,5 @@
 import os
-from pathlib import  Path
+from pathlib import Path
 from visualInsights.constants import *
 from visualInsights import logger
 from visualInsights.utils.utils import read_yaml, load_json
@@ -7,7 +7,7 @@ from visualInsights.pipeline.data_loader import DataLoader, nuscenesDataExtracto
 from visualInsights.pipeline.data_process import DataProcessor
 
 #flags to control which stage to run
-run_data_loader = True
+run_data_loader = False
 run_data_processor = True
 
 config = read_yaml(CONFIG_FILE_PATH)
@@ -41,6 +41,7 @@ if run_data_processor:
         logger.info("Generating class distribution data from nuscenes")
         data_processor = DataProcessor()
         data_processor.get_class_distribution(data)
+        data_processor.get_performance_scores()
         logger.info(f">>>>>> {STAGE_NAME} Completed! <<<<<<")
 
     except Exception as e:
