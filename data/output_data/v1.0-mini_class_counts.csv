@@ -1,0 +1,14 @@
+class_name,sub_category,counts,proportion
+vehicle,car,9427,0.42710221094599493
+human,pedestrian,5701,0.25829104748097137
+movable_object,barrier,2692,0.12196447988401594
+movable_object,trafficcone,1574,0.07131206959043132
+vehicle,truck,851,0.03855563610003625
+vehicle,motorcycle,543,0.02460130482058717
+vehicle,bus,526,0.0238310982239942
+vehicle,bicycle,274,0.012413918086263138
+vehicle,construction,245,0.01110003624501631
+movable_object,pushable_pullable,91,0.004122870605291772
+static_object,bicycle_rack,69,0.0031261326567596955
+vehicle,trailer,63,0.0028542950344327654
+movable_object,debris,16,0.0007249003262051468
