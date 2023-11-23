@@ -1,7 +1,7 @@
 # visual-insights
 **CS-6242**
 <br/> **Team 165**: VisualInsights
-<br/> **Authors**: Mohammad Azzam, Zain Bitar, Sangeeth Nambiar, Krishna Punyakoti, Lauren Ackerman 
+<br/> **Authors**: Mohammad Azzam, Zain Bitar, Sangeeth Nambiar, Krishna Punyakoti
 
 ## Introduction
 Deep Learning and its applications have made tremendous progress in the last decade across various fields like computer vision and natural language processing (Heaton, 2018). It is well established that deep learning is data hungry (Aggarwal, 2018) and the performance of these models rely on the availability of large and high-quality datasets. Researchers have argued that data should be treated as “first class citizens” alongside data management leading to what is today referred to as “Data centric AI” (Whang et al., 2023). One of the key challenge AI practitioners face today to make this happen, is the difficulty in assessing the quality and sufficiency of datasets used in training or validating machine learning models (Breck et al., 2019). This is particularly a pain point in the world of computer vision. Our project, VisualInsights will support AI practitioners in the computer vision field to seamlessly and intuitively assess image datasets through an interactive interface. 
