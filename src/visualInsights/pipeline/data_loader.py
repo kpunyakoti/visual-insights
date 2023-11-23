@@ -1,8 +1,5 @@
-import isoduration.parser.parsing
-import numpy as np
-import pandas as pd
-import tqdm
 import os
+import tqdm
 from pathlib import  Path
 from visualInsights.constants import *
 from visualInsights import logger
@@ -28,9 +25,10 @@ class DataLoader:
         nuscene_obj = NuScenes(version=self.nuscenes_version, dataroot=self.data_path, verbose=True)
         return nuscene_obj
 
-class nuscenesDataProcesser:
+class nuscenesDataExtractor:
     def __init__(self, nuscene_obj):
         self.nuscene_obj = nuscene_obj
+        self.nuscenes_version = config.data_loader['nuscenes_version']
         self.output_path = config.data_output['output_data_path']
         self.channel_names = params.channel_names
 
@@ -61,64 +59,13 @@ class nuscenesDataProcesser:
 
                     # For each of the annotations in that sample
                     for box in boxes:
-                        corners = view_points(box.corners(), np.array(camera_intrinsic), normalize=True)[:2, :]
-                        image_data_dict[channel_token]['annotations'].append({'name': box.name,
-                                                                              'corners': corners.tolist()
+                        #corners = view_points(box.corners(), np.array(camera_intrinsic), normalize=True)[:2, :]
+                        image_data_dict[channel_token]['annotations'].append({'name': box.name#,
+                                                                              #'corners': corners.tolist()
                                                                               })
                 # Get the next token
                 token = sample['next']
 
         logger.info("Saving extracted image data dict")
-        json_file_path = os.path.join(self.output_path, "camera_boxes.json")
-        save_json(Path(json_file_path), image_data_dict)
-
-        return image_data_dict
-
-    def get_class_distribution(self, image_dict):
-
-        data = image_dict.copy()
-        channel_list, iid_list, name_list, corners_list = [], [], [], []
-
-        for key, value in data.items():
-            channel = value["channel"]
-            iID = value["iID"]
-            annotations = value["annotations"]
-
-            for annotation in annotations:
-                name = annotation["name"]
-                corners = annotation["corners"]
-
-                # Append the data to the respective lists
-                channel_list.append(channel)
-                iid_list.append(iID)
-                name_list.append(name)
-                corners_list.append(corners)
-
-        image_df = pd.DataFrame({"channel": channel_list,
-                                 "iID": iid_list,
-                                 "name": name_list,
-                                 "corners": corners_list
-                                 })
-        image_df[['class_name', 'sub_category', 'grain']] = image_df['name'].str.split('.', expand=True, n=2)
-
-        class_counts = pd.DataFrame({'counts': image_df.class_name.value_counts(),
-                                     'proportion': image_df.class_name.value_counts(normalize=True)
-                                     }).reset_index().rename(columns={"index": "class_name"})
-
-        class_counts = class_counts[['class_name', 'counts', 'proportion']]
-
-        sub_category_counts = pd.DataFrame({'counts': image_df[['class_name', 'sub_category']].value_counts(),
-                                            'proportion': image_df[['class_name', 'sub_category']].value_counts(
-                                                normalize=True)
-                                            }).reset_index()
-
-        sub_category_counts = sub_category_counts[['class_name', 'sub_category', 'counts', 'proportion']]
-
-        image_df_filename = os.path.join(self.output_path, "image_data.csv")
-        class_counts_filename = os.path.join(self.output_path, "class_counts.csv")
-        sub_categogy_filename = os.path.join(self.output_path, "sub_category_counts.csv")
-
-        logger.info("Saving class distribution files.")
-        image_df.to_csv(image_df_filename, index=False)
-        class_counts.to_csv(class_counts_filename, index=False)
-        sub_category_counts.to_csv(sub_categogy_filename, index=False)
+        json_filename = os.path.join(self.output_path, self.nuscenes_version+"_camera_boxes.json")
+        save_json(Path(json_filename), image_data_dict)
