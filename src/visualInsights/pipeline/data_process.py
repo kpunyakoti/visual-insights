@@ -83,4 +83,5 @@ class DataProcessor:
         # Merge class counts and performance scores
         final_metrics_df = class_counts_df.merge(leader_df, on = 'sub_category', how='inner')
 
+        final_metrics_df.rename(columns={'class_name': 'class_group', 'sub_category': 'class_name'}, inplace=True)
         final_metrics_df.to_csv(self.metrics_file, index=False)
