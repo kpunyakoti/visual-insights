@@ -4,6 +4,7 @@ data_loader:
   nuscenes_data_path: data/input_data/
   nuscenes_version: v1.0-trainval
   cifar_data_path:
+  input_images_path: data/input_data/samples/CAM_FRONT/
 
 data_output:
   output_data_path: data/output_data/
