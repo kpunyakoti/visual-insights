@@ -1,21 +1,19 @@
-import os
-from pathlib import Path
 from visualInsights.constants import *
 from visualInsights import logger
-from visualInsights.utils.utils import read_yaml, load_json
 from visualInsights.pipeline.data_loader import DataLoader, nuscenesDataExtractor
 from visualInsights.pipeline.data_process import DataProcessor
+from visualInsights.pipeline.generate_feature_vectors import generateFeatureVectorDB
+from visualInsights.pipeline.compute_image_similarities import computeImageSimilarity
 
 #flags to control which stage to run
-run_data_loader = False
-run_data_processor = True
+run_meta_data_extractor = False
+generate_statistics = False
+generate_feature_vector_db = False
+compute_image_similarities = True
+fetch_similar_images = True
 
-config = read_yaml(CONFIG_FILE_PATH)
-output_path = config.data_output['output_data_path']
-nuscenes_version = config.data_loader['nuscenes_version']
-
-if run_data_loader:
-    STAGE_NAME = "Stage 1. Data Loading & Extraction"
+if run_meta_data_extractor:
+    STAGE_NAME = "Stage 1. Load & Extract Meta Data"
     logger.info(f">>>>>> {STAGE_NAME} Started <<<<<<")
     try:
         data_loader = DataLoader()
@@ -31,16 +29,14 @@ if run_data_loader:
         logger.exception(e)
         raise e
 
-if run_data_processor:
-    STAGE_NAME = "Stage 2. Data Processing"
+if generate_statistics:
+    STAGE_NAME = "Stage 2. Generate Statistics"
     logger.info(f">>>>>> {STAGE_NAME} Started <<<<<<")
     try:
-        json_filename = os.path.join(output_path, nuscenes_version + "_camera_boxes.json")
-        data = load_json(Path(json_filename))
-
-        logger.info("Generating class distribution data from nuscenes")
+        logger.info("Generating class distribution data from nuscenes.")
         data_processor = DataProcessor()
-        data_processor.get_class_distribution(data)
+        data_processor.get_class_distribution()
+        logger.info("Fetching model performance scores.")
         data_processor.get_performance_scores()
         logger.info(f">>>>>> {STAGE_NAME} Completed! <<<<<<")
 
@@ -48,3 +44,28 @@ if run_data_processor:
         logger.exception(e)
         raise e
 
+if generate_feature_vector_db:
+    STAGE_NAME = "Stage 3. Generate Feature Vecotrs"
+    logger.info(f">>>>>> {STAGE_NAME} Started <<<<<<")
+    try:
+        logger.info("Generating feature vectors for all images.")
+        feature_vector = generateFeatureVectorDB()
+        feature_vector.generate_feature_vectors()
+        logger.info(f">>>>>> {STAGE_NAME} Completed! <<<<<<")
+
+    except Exception as e:
+        logger.exception(e)
+        raise e
+
+if compute_image_similarities:
+    STAGE_NAME = "Stage 4. Compute Image Similarities"
+    logger.info(f">>>>>> {STAGE_NAME} Started <<<<<<")
+    try:
+        logger.info("Computing image similarity scores")
+        img_similarity = computeImageSimilarity()
+        img_similarity.compute_top_n_similar_images()
+        logger.info(f">>>>>> {STAGE_NAME} Completed! <<<<<<")
+
+    except Exception as e:
+        logger.exception(e)
+        raise e
