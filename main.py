@@ -56,3 +56,16 @@ if generate_feature_vector_db:
     except Exception as e:
         logger.exception(e)
         raise e
+
+if compute_image_similarities:
+    STAGE_NAME = "Stage 4. Compute Image Similarities"
+    logger.info(f">>>>>> {STAGE_NAME} Started <<<<<<")
+    try:
+        logger.info("Computing image similarity scores")
+        img_similarity = computeImageSimilarity()
+        img_similarity.compute_top_n_similar_images()
+        logger.info(f">>>>>> {STAGE_NAME} Completed! <<<<<<")
+
+    except Exception as e:
+        logger.exception(e)
+        raise e
