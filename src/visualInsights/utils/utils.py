@@ -70,3 +70,4 @@ def load_json(path: Path):
 
     logger.info(f"json file loaded succesfully from: {path}")
     return content
+

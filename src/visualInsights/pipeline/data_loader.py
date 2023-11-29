@@ -3,9 +3,8 @@ import tqdm
 from pathlib import  Path
 from visualInsights.constants import *
 from visualInsights import logger
-from visualInsights.utils.utils import read_yaml, save_json
+from visualInsights.utils.utils import *
 from nuscenes.nuscenes import NuScenes
-from nuscenes.utils.geometry_utils import view_points
 
 config = read_yaml(CONFIG_FILE_PATH)
 params = read_yaml(PARAMS_FILE_PATH)
@@ -27,6 +26,7 @@ class DataLoader:
 
 class nuscenesDataExtractor:
     def __init__(self, nuscenes_obj):
+        
         self.nuscenes_obj = nuscenes_obj
         self.nuscenes_version = config.data_loader['nuscenes_version']
         self.output_path = config.data_output['output_data_path']
@@ -47,21 +47,19 @@ class nuscenesDataExtractor:
                 for channel in self.channel_names:
                     channel_token = sample['data'][channel]
                     # Get the annotations for this sample
-                    filename, boxes, camera_intrinsic = self.nuscenes_obj.get_sample_data(channel_token,
+                    file_path, boxes, camera_intrinsic = self.nuscenes_obj.get_sample_data(channel_token,
                                                                              selected_anntokens=annotation_list)
 
                     # If this same was not there in the list already add an empty array to hold the annotations
                     if channel_token not in image_data_dict:
                         image_data_dict[channel_token] = {'channel': channel,
                                                           'iID': channel_token,
-                                                          'filePath': filename,
+                                                          'filename': os.path.basename(file_path),
                                                           'annotations': []}
 
                     # For each of the annotations in that sample
                     for box in boxes:
-                        #corners = view_points(box.corners(), np.array(camera_intrinsic), normalize=True)[:2, :]
-                        image_data_dict[channel_token]['annotations'].append({'name': box.name#,
-                                                                              #'corners': corners.tolist()
+                        image_data_dict[channel_token]['annotations'].append({'name': box.name
                                                                               })
                 # Get the next token
                 token = sample['next']

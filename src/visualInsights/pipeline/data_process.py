@@ -1,5 +1,6 @@
 """Process the nuscenes data to generate class distribution and performance scores."""
 import os
+import sys
 import pandas as pd
 from pathlib import Path
 from visualInsights.constants import *
@@ -24,7 +25,12 @@ class DataProcessor:
         self.image_df_file = os.path.join(self.output_path, self.nuscenes_version + "_image_data.csv")
         self.metrics_file = os.path.join(self.output_path, self.nuscenes_version + "_final_metrics.csv")
 
-    def get_class_distribution(self, data):
+    def get_class_distribution(self):
+        try:
+            json_filename = os.path.join(self.output_path, self.nuscenes_version + "_camera_boxes.json")
+            data = load_json(Path(json_filename))
+        except FileNotFoundError:
+            sys.exit(f"{json_filename} does not exist! Please check the paths and file names. Exiting!!")
 
         channel_list, iid_list, name_list = [], [], []
 

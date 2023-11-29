@@ -8,3 +8,7 @@ data_loader:
 
 data_output:
   output_data_path: data/output_data/
+
+db_config:
+  db_path: artifacts/
+  db_name: featurevectorDB
