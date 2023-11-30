@@ -33,3 +33,9 @@ pip install -r requirements.txt
 ptyhon main.py
 ```
 5. This would generate the csv files in "data/output_data/" directory.
+
+## Launching the UI on Streamlit
+To launch the UI, make sure you have Python version 3.7, then run
+```commanline
+python -m streamlit run ui/home.py
+```
