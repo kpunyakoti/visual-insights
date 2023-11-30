@@ -10,7 +10,7 @@ run_meta_data_extractor = False
 generate_statistics = False
 generate_feature_vector_db = False
 compute_image_similarities = True
-fetch_similar_images = True
+fetch_similar_images = False
 
 if run_meta_data_extractor:
     STAGE_NAME = "Stage 1. Load & Extract Meta Data"

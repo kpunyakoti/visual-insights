@@ -2,6 +2,7 @@ import os
 import sys
 import numpy as np
 import tqdm
+import pandas as pd
 import shutil
 from visualInsights.constants import *
 from visualInsights import logger
@@ -41,11 +42,14 @@ class computeImageSimilarity:
 
     def compute_top_n_similar_images(self):
 
+        #fetch feature vectors for all images
         self.cursor.execute('SELECT img_name FROM ImageFeatures')
         img_names = self.cursor.fetchall()
 
-        self.cursor.execute("DROP TABLE IF EXISTS SimilarityResults")
+        img_feature_dict = {img[0]: np.array(self.retrieve_feature_vector(img[0]).tolist()) for img in img_names}
+        image_feature_df = pd.DataFrame(list(img_feature_dict.items()), columns=['image_name', 'feature_vector'])
 
+        self.cursor.execute("DROP TABLE IF EXISTS SimilarityResults")
         self.cursor.execute('''
                 CREATE TABLE IF NOT EXISTS SimilarityResults (
                 img_name TEXT,
@@ -53,27 +57,31 @@ class computeImageSimilarity:
                 )
                 ''')
 
-        for img_name in tqdm.tqdm(img_names):
-            # Calculate similarity scores for img_name with all other images
-            similarity_scores = []
+        #compute similarity matrix for all images
+        cosine_sim = cosine_similarity(image_feature_df['feature_vector'].tolist(),
+                                       image_feature_df['feature_vector'].tolist())
 
-            for other_img_name in img_names:
-                if img_name != other_img_name:  # Exclude the image itself
-                    similarity_score = cosine_similarity([self.retrieve_feature_vector(other_img_name[0])],
-                                                         [self.retrieve_feature_vector(img_name[0])]).flatten()[0]
-                    similarity_scores.append((other_img_name[0], similarity_score))
+        result_df = pd.DataFrame(columns=['image_name', 'top_similar_images'])
 
-            # Sort the images by similarity score in descending order
-            sorted_images = sorted(similarity_scores, key=lambda x: x[1], reverse=True)
+        # Iterate through each image
+        for i, image_name in tqdm.tqdm(enumerate(image_feature_df['image_name'])):
+            # Get the similarity scores for the current image
+            similar_scores = cosine_sim[i]
+            # Sort in descending order and get the indices of the top n similar images (excluding the image itself)
+            top_indices = (-similar_scores).argsort()[1:self.n+1]
+            # Get the image names corresponding to the top indices
+            top_similar_images = image_feature_df['image_name'].iloc[top_indices].tolist()
+            # Append to the result DataFrame
+            result_df = result_df.append({'image_name': image_name, 'top_similar_images': top_similar_images},
+                                         ignore_index=True)
 
-            # Select the top N similar images (excluding the image itself)
-            top_n_similar_images = [img[0] for img in sorted_images[:self.n]]
+        result_df['top_similar_images'] = result_df['top_similar_images'].apply(lambda x: ','.join(x))
 
-            self.cursor.execute('INSERT INTO SimilarityResults (img_name, similar_images) VALUES (?, ?)',
-                           (img_name[0], ','.join(top_n_similar_images)))
+        for index, row in result_df.iterrows():
+            self.cursor.execute("INSERT OR REPLACE INTO SimilarityResults (img_name, similar_images) VALUES (?, ?)",
+                           (row['image_name'], row['top_similar_images']))
 
         self.conn.commit()
-
         logger.info("Generated top n similar images for each image and stored in SimilarityResults table.")
 
     def empty_directory(self, dir_path):
