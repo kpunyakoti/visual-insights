@@ -41,7 +41,12 @@ By running the notebook it generates all the data in the following two folders: 
 **To avoid heavy computation and time consumption it;s not recommeneded to run the notebook,as notebook has been run and all necessary files are already allocated.**
 
 ## Launching the UI on Streamlit
+To keep a light version of the data, you will first need to untar the data file under data/. To do so, all you need to run is
+```commandline
+python ui/data_untar.py
+```
+
 To launch the UI, make sure you have Python version 3.7, then run
-```commanline
+```commandline
 python -m streamlit run ui/home.py
 ```
