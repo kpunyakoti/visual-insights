@@ -48,6 +48,7 @@ class DataProcessor:
                                  "iID": iid_list,
                                  "name": name_list
                                  })
+        image_df['name'] = image_df['name'].str.replace(r'(?<=[^.])$', '.')
         image_df[['class_name', 'sub_category', 'grain']] = image_df['name'].str.split('.', expand=True, n=2)
 
         class_counts = pd.DataFrame({'counts': image_df[['class_name', 'sub_category']].value_counts(),
@@ -56,7 +57,8 @@ class DataProcessor:
                                             }).reset_index()
 
         class_counts = class_counts[['class_name', 'sub_category', 'counts', 'proportion']]
-
+        class_counts.loc[class_counts['sub_category']=="", 'sub_category'] = class_counts['class_name']
+        
         logger.info("Saving class distribution files.")
         image_df.to_csv(self.image_df_file, index=False)
         class_counts.to_csv(self.class_counts_file, index=False)
