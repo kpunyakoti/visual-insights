@@ -34,8 +34,10 @@ ptyhon main.py
 ```
 5. This would generate the csv files in "data/output_data/" directory.
 
-## Testing the Clustering Files
-You can find all clustering related algorithms used in the notebooks directory under the name "Cluster Generation and Metadata Generator".
+## Clustering Algorithms
+You can find all clustering related algorithms run on the images in a jupyter notebook found in in the "notebooks" folder under the name "Cluster Generation and Metadata Generator".
+By running the notebook it generates all the data in the following two folders: "clustering_output" and "custering_stats" that are to be used in the UI.
+*to avoid heavy computation and time consumption the notebook hasbeen run and all necessary files are already allocated. 
 
 ## Launching the UI on Streamlit
 To launch the UI, make sure you have Python version 3.7, then run
