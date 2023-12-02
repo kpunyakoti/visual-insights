@@ -1,0 +1,16 @@
+class_name,sub_category,counts,proportion
+vehicle,car,138944,0.42
+human,pedestrian,62131,0.19
+movable_object,barrier,45062,0.14
+vehicle,truck,25673,0.08
+movable_object,trafficcone,25227,0.08
+movable_object,pushable_pullable,8437,0.03
+vehicle,trailer,7276,0.02
+vehicle,bus,5714,0.02
+vehicle,construction,4709,0.01
+vehicle,motorcycle,3304,0.01
+vehicle,bicycle,2960,0.01
+movable_object,debris,1173,0.00
+static_object,bicycle_rack,911,0.00
+vehicle,emergency,211,0.00
+animal,animal,157,0.00
