@@ -30,15 +30,15 @@ pip install -r requirements.txt
    2. If you've previously loaded and extracted data, and you have a saved JSON file, you can skip the data loading step by setting the loading flag to "False" and proceed with data processing.
 4. Execute the application by running main.py. Make sure your terminal is in the root folder directory.
 ```commandline
-ptyhon main.py
+python main.py
 ```
 5. This would generate the csv files in "data/output_data/" directory.
 
-## Clustering Algorithms
+## Clustering Algorithms 
 You can find all clustering related algorithms run on the images in a jupyter notebook found in in the "notebooks" folder under the name "Cluster Generation and Metadata Generator".
-By running the notebook it generates all the data in the following two folders: "clustering_output" and "custering_stats" that are to be used in the UI.
+By running the notebook it generates all the data in the following two folders: "clustering_output" and "custering_stats" that are to be used in the UI. To run the notebook you need to run the "imageclusters.ipynb" intially and then use the SQLite database file path as input.
 
-**To avoid heavy computation and time consumption it;s not recommeneded to run the notebook,as notebook has been run and all necessary files are already allocated.**
+**To avoid heavy computation and time consumption its recommeneded not to run the notebook,as notebook has been run and all necessary files are already allocated.**
 
 ## Launching the UI on Streamlit
 To keep a light version of the data, you will first need to untar the data file under data/. To do so, all you need to run is
