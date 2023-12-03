@@ -64,4 +64,4 @@ python -m streamlit run ui/home.py
 ```
 
 ## DEMO VIDEO
-Demo video can be found here:
+Demo video can be found here: https://www.youtube.com/watch?v=Auhm9VxOdgs
