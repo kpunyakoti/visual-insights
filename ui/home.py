@@ -15,12 +15,12 @@ def open_image(x):
         return None
 
 # Configure data path and cluster output path.
-data_directory_path = '../data/'
-cluster_output_path = '../clustering_output/'
-cluster_stats_path = '../clustering_stats/'
+data_directory_path = 'data/'
+cluster_output_path = 'clustering_output/'
+cluster_stats_path = 'clustering_stats/'
 
 # Streamlit configs.
-logo_url = 'logo-no-background.png'
+logo_url = 'ui/logo-no-background.png'
 st.set_page_config(page_title='VisualInsights', page_icon=logo_url, layout="wide", initial_sidebar_state="auto", menu_items=None)
 st.header('Team 165 - CSE6242')
 st.sidebar.image(logo_url)

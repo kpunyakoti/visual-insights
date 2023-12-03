@@ -2,10 +2,10 @@ from PIL import Image
 import os
 
 # Specify the directory containing your images
-input_directory = '../data/nuScenes_CamFront'
+input_directory = 'data/nuScenes_CamFront'
 
 # Specify the output directory for resized images
-output_directory = '../data/nuScenes_CamFront_resized'
+output_directory = 'data/nuScenes_CamFront_resized'
 
 # Set the desired width and height for resizing
 new_width = 50
