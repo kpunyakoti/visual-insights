@@ -47,7 +47,7 @@ python main.py
 
 ### Clustering Algorithms [Optional]
 You can find all clustering related algorithms run on the images in a jupyter notebook found in in the "notebooks" folder under the name "Cluster Generation and Metadata Generator".
-By running the notebook it generates all the data in the following two folders: "clustering_output" and "custering_stats" that are to be used in the UI. To run the notebook you need to run the "imageclusters.ipynb" intially and then use the SQLite database file path as input.
+By running the notebook it generates all the data in the following two folders: "clustering_output" and "custering_stats" that are to be used in the UI. To run the notebook you need to run the "imageclusters.ipynb" initially and then use the SQLite database file path as input.
 **To avoid heavy computation and time consumption its recommeneded not to run the notebook,as notebook has been run and all necessary files are already allocated.**
 
 ## EXECUTION 
