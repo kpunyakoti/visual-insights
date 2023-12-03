@@ -23,16 +23,21 @@ Note: Optional items marked below are not needed for demo, data pipeline has bee
 ```commandline
 pip install -r requirements.txt
 ```
-### Execution Using Jupyter Notebooks [Optional].
+### Exploration Using Jupyter Notebooks [Optional]
 Skip to next section if you want to execute the same using python scripts.
 <br> **Important**: Make sure you have downloaded the nuscenes meta data files & "CAM_FRONT" image samples to "data/input_data" folder path.
 <br> You can find the jupyter notebooks in the "notebooks" folder in the root directory.
 
 1. Run "generate_class_distributions.ipynb" notebook to generate the distribution and counts of object classes in the images.
 2. Run "generate_feature_vectors.ipynb" notebook to generate feature vectors for each image and store them in the sqlite db.
-3. Run "compute_top_n_similar_images.ipyn" notebook to compute top n similar images for each image using cosine similarity matrix for all images.
+3. Run "compute_top_n_similar_images.ipynb" notebook to compute top n similar images for each image using cosine similarity matrix for all images.
 
-### Execution Using Python Code [Optional]
+#### Clustering Algorithms [Optional]
+You can find all clustering related algorithms run on the images in a jupyter notebook found in in the "notebooks" folder under the name "Cluster Generation and Metadata Generator".
+By running the notebook it generates all the data in the following two folders: "clustering_output" and "custering_stats" that are to be used in the UI. To run the notebook you need to run the "imageclusters.ipynb" initially and then use the SQLite database file path as input.
+**To avoid heavy computation and time consumption its recommeneded not to run the notebook,as notebook has been run and all necessary files are already allocated.**
+
+### Exploration Using Python Code [Optional]
 If you have run using jupyter notebooks, you can skip this section.
 1. Make sure you have downloaded the nuscenes meta data files & "CAM_FRONT" image samples  to "data/input_data" folder path.
 2. Update config parameters in config/config.yaml file - update the nuscenes version & data path for which you want to execute the application. Either mini (v1.0-mini) or the full data (v1.0-trainval_meta)
@@ -44,11 +49,6 @@ If you have run using jupyter notebooks, you can skip this section.
 python main.py
 ```
 5. This would generate the csv files in "data/output_data/" directory.
-
-### Clustering Algorithms [Optional]
-You can find all clustering related algorithms run on the images in a jupyter notebook found in in the "notebooks" folder under the name "Cluster Generation and Metadata Generator".
-By running the notebook it generates all the data in the following two folders: "clustering_output" and "custering_stats" that are to be used in the UI. To run the notebook you need to run the "imageclusters.ipynb" initially and then use the SQLite database file path as input.
-**To avoid heavy computation and time consumption its recommeneded not to run the notebook,as notebook has been run and all necessary files are already allocated.**
 
 ## EXECUTION 
 To keep a light version of the data, you will first need to untar the data file under data/. To do so, all you need to run is
