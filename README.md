@@ -22,8 +22,18 @@ Deep Learning and its applications have made tremendous progress in the last dec
 pip install -r requirements.txt
 ```
 
-## Execution
-1. Make sure you have downloaded the nuscenes meta data files in to "data/input_data" folder path.
+## Execution using jupyter notebooks
+Skip to next section if you want to execute the same using python scripts.
+<br> **Important**: Make sure you have downloaded the nuscenes meta data files & "CAM_FRONT" image samples to "data/input_data" folder path.
+<br> You can find the jupyter notebooks in the "notebooks" folder in the root directory.
+
+1. Run "generate_class_distributions.ipynb" notebook to generate the distribution and counts of object classes in the images.
+2. Run "generate_feature_vectors.ipynb" notebook to generate feature vectors for each image and store them in the sqlite db.
+3. Run "compute_top_n_similar_images.ipyn" notebook to compute top n similar images for each image using cosine similarity matrix for all images.
+
+## Execution using python code [Optional]
+If you have run using jupyter notebooks, you can skip this section.
+1. Make sure you have downloaded the nuscenes meta data files & "CAM_FRONT" image samples  to "data/input_data" folder path.
 2. Update config parameters in config/config.yaml file - update the nuscenes version & data path for which you want to execute the application. Either mini (v1.0-mini) or the full data (v1.0-trainval_meta)
 3. Set the "run_data_loader" and "run_data_processor" flags in main.py as follows:
    1. If it's your first run and you need to load data, extract class names from metadata & save it as a JSON file, and the process the JSON file to generate class distribution information, set both flags to "True."
