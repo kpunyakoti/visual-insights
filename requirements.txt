@@ -1,7 +1,7 @@
 streamlit==1.23.1
 Pillow==9.5.0
 plotly==5.18.0
-tensorflow==2.10.1
+tensorflow
 scikit-learn
 matplotlib
 nuscenes-devkit
